@@ -62,7 +62,7 @@ WHERE hpg2.personId = 'test';<br/>
     }
 Задание третье:
 
-    // Массивы для преобразования чисел в слова
+    
     private static final String[] UNITS = {
         "", "один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять",
         "десять", "одиннадцать", "двенадцать", "тринадцать", "четырнадцать", "пятнадцать",
@@ -91,17 +91,13 @@ WHERE hpg2.personId = 'test';<br/>
         "копейка", "копейки", "копеек"
     };
 
-    /**
-     * Преобразует сумму в прописное написание
-     * @param amount сумма (до 99 999.99 включительно)
-     * @return строка с прописным написанием суммы
-     */
+  
     public static String amountToWords(BigDecimal amount) {
         if (amount == null) {
             throw new IllegalArgumentException("Сумма не может быть null");
         }
         
-        // Проверяем диапазон (до 99 999.99)
+      
         if (amount.compareTo(new BigDecimal("99999.99")) > 0) {
             throw new IllegalArgumentException("Сумма превышает допустимый лимит 99 999.99");
         }
@@ -110,38 +106,36 @@ WHERE hpg2.personId = 'test';<br/>
             throw new IllegalArgumentException("Сумма не может быть отрицательной");
         }
         
-        // Округляем до 2 знаков после запятой
+      
         amount = amount.setScale(2, RoundingMode.HALF_UP);
         
-        // Разделяем на целую и дробную части
+        
         long rubles = amount.longValue();
         int kopecks = amount.remainder(BigDecimal.ONE)
                            .multiply(new BigDecimal("100"))
                            .intValue();
         
-        // Формируем результат
+        
         StringBuilder result = new StringBuilder();
         
-        // Обрабатываем рубли
+        
         if (rubles == 0) {
             result.append("ноль ");
         } else {
             result.append(convertNumberToWords(rubles)).append(" ");
         }
         
-        // Добавляем правильную форму слова "рубль"
+       
         result.append(getCorrectForm(CURRENCY_MAIN, rubles));
         
-        // Добавляем копейки
+        
         result.append(" ").append(String.format("%02d", kopecks)).append(" ");
         result.append(getCorrectForm(CURRENCY_FRACTION, kopecks));
         
         return result.toString().trim();
     }
     
-    /**
-     * Преобразует число в слова
-     */
+    
     private static String convertNumberToWords(long number) {
         if (number == 0) {
             return "ноль";
@@ -149,7 +143,6 @@ WHERE hpg2.personId = 'test';<br/>
         
         StringBuilder words = new StringBuilder();
         
-        // Тысячи
         if (number >= 1000) {
             int thousands = (int) (number / 1000);
             words.append(convertHundreds(thousands, true)).append(" ");
@@ -161,7 +154,7 @@ WHERE hpg2.personId = 'test';<br/>
             }
         }
         
-        // Сотни, десятки и единицы
+        
         if (number > 0) {
             words.append(convertHundreds((int) number, false));
         }
@@ -169,24 +162,20 @@ WHERE hpg2.personId = 'test';<br/>
         return words.toString().trim();
     }
     
-    /**
-     * Преобразует трехзначное число в слова
-     * @param number число от 1 до 999
-     * @param isThousands true если это тысячи
-     */
+    
     private static String convertHundreds(int number, boolean isThousands) {
         if (number == 0) {
             return "";
         }
         StringBuilder result = new StringBuilder();
         
-        // Сотни
+        
         int hundreds = number / 100;
         if (hundreds > 0) {
             result.append(HUNDREDS[hundreds]).append(" ");
         }
         
-        // Десятки и единицы
+        
         int remainder = number % 100;
         if (remainder < 20) {
             if (remainder > 0) {
@@ -214,9 +203,7 @@ WHERE hpg2.personId = 'test';<br/>
         return result.toString().trim();
     }
     
-    /**
-     * Склоняет единицы для тысяч
-     */
+   
     private static String convertThousandsUnits(String unit) {
         return switch (unit) {
             case "один" -> "одна";
@@ -225,9 +212,7 @@ WHERE hpg2.personId = 'test';<br/>
         };
     }
     
-    /**
-     * Возвращает правильную форму слова в зависимости от числа
-     */
+ 
     private static String getCorrectForm(String[] forms, long number) {
         long lastTwo = number % 100;
         long lastOne = number % 10;
@@ -243,7 +228,7 @@ WHERE hpg2.personId = 'test';<br/>
         };
     }
 
-    // Пример использования
+   
     public static void main(String[] args) {
         BigDecimal[] testAmounts = {
             new BigDecimal("12345.67"),
