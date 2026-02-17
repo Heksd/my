@@ -1,11 +1,11 @@
 Первое задание<br/>
-  SELECT CONCAT( rel.familyName, ' ', rel.givenName, ' ', rel.middleName) AS [ФИО] ,rel.birthDate AS [Дата рождения] ,dep.contactRelationship AS [Родственная связь]<br/>
-FROM HPPersonGeneric AS emp<br/>
+  SELECT CONCAT( hpg1.familyName, ' ', hpg1.givenName, ' ', hpg1.middleName) AS [ФИО] ,hpg1.birthDate AS [Дата рождения] ,dep.contactRelationship AS [Родственная связь]<br/>
+FROM HPPersonGeneric AS hpg2<br/>
 JOIN HPPersonDependant AS dep <br/>
-    ON emp.sysId = dep.HPPersonGenericSysId<br/>
-JOIN HPPersonGeneric AS rel <br/>
-    ON dep.HPRelatedPersonSysId = rel.sysId<br/>
-WHERE emp.personId = 'test';<br/>
+    ON hpg2.sysId = dep.HPPersonGenericSysId<br/>
+JOIN HPPersonGeneric AS hpg1 <br/>
+    ON dep.HPRelatedPersonSysId = hpg1.sysId<br/>
+WHERE hpg2.personId = 'test';<br/>
 
 Задача вторая <br/>
 
